@@ -1,0 +1,104 @@
+Welcome to GRX 2.4.9!
+
+GRX is a 2D graphics C library originaly written by Csaba Biegl for
+DJ Delorie's DOS port of the GCC compiler.
+
+The library is compiled with gcc 4.7.1
+
+GRX fonts are installed in a standard djgpp location:
+%DJGPP%\share\grx\fonts 
+(similar to 
+%DJGPP%\share\texmf\fonts 
+%DJGPP%\share\groff\font 
+in DJGPP and to more others in linux)
+They are known by default by defining during compilation
+GRX_DEFAULT_FONT_PATH=/dev/env/DJDIR/share/grx/fonts
+
+When compiling it was supposed that other graphics libraries
+available for DJGPP have been installed:
+jpeg6bb.zip (or ljpeg6bb) png1216b.zip tiff312b.zip zlib123b.zip
+This causes no harm, if you have not installed, and do not use, them.
+These libraries are linked in C only by issuing explicitly 
+-ljpeg -lpng -ltiff -lz	during compilation
+and in Pascal (GPC) by commenting (out) {L ...} instructions
+at the beginning of the import units gpc.pas and graph.pas.
+
+There is no harm in installing side by side GRX and MGRX.
+The only conflict is between auxiliary binaries	contained in the
+bin directory, but they are functionally identical, and are used only
+for some testing purpose.
+
+If you do not like this, download the sources v2tk/grx249s.zip from
+djgpp mirrors, or from the official site of GRX
+   http://www.gnu.de/software/GRX/
+and recompile following instructions contained in them.
+
+
+GRX binary installation instructions
+====================================
+
+1 - unzip on top of your djgpp tree, preserving directory structure.
+
+    e.g. if you have downloaded the binary in c:\temp
+
+     cd c:\djgpp
+     unzip32 c:\temp\grx249b.zip
+
+2 - optionally set the default driver and graphics mode info
+
+       SET GRX20DRV=<driver> gw <width> gh <height> nc <colors>
+
+     Available drivers are:
+       herc, stdvga, stdega, et4000, cl5426, mach64,
+       ati28800, s3, VESA, memory
+
+3 - for gcc users link with -lgrx20 -lpc -ljpeg -lpng -ltiff -lz -lm
+    (if you need all extra graphics libraries)
+
+4 - for gpc users, include in your programs
+
+uses grx        (native grx functions)
+    or
+uses graph	(Borland bgi emulation)
+
+and compile with the option
+
+   --unit-path=c:/djgpp/units
+
+
+Help
+====
+
+  type 'info grx' to view the info version of the manual.
+
+  If you have problems installing or running GRX check
+
+    http://www.gnu.de/software/GRX/
+
+  for updates, pre-compiled libs, ...
+
+  If this doesn't help, check your system/compiler FAQ (eg., the
+  DJGPP v2 FAQ is at http://www.delorie.com/djgpp/v2faq/ )
+
+  Check the GRX mailing list archive at
+  http://grx.gnu.de/archive/grx/en/
+
+  Check out the DJGPP newsgroup comp.os.msdos.djgpp (archive at
+  http://www.delorie.com/djgpp/mail-archives )
+
+  Send a problem report to comp.os.msdos.djgpp or to the GRX mailing
+  list <grx@gnu.de> (see below).
+
+  There is a GRX mailing list <grx@gnu.de> and a separate, moderated
+  mailing list for GRX announcements <grx-announce@gnu.de>. To
+  subscribe to one of the lists, send an email containing "subscribe
+  grx" or "subscribe grx-announce" in the body to <majordomo@gnu.de>.
+  (The subject will be ignored.)
+
+
+License
+=======
+
+  The GRX graphics library is free software; you can redistribute it
+  and/or modify it under some conditions; see the "copying.grx" file
+  for details.

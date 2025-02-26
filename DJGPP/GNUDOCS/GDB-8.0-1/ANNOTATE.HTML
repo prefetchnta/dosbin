@@ -1,0 +1,1483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Copyright (C) 1994-2017 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License". -->
+<!-- Created by GNU Texinfo 6.4, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>GDB&rsquo;s Obsolete Annotations</title>
+
+<meta name="description" content="GDB&rsquo;s Obsolete Annotations">
+<meta name="keywords" content="GDB&rsquo;s Obsolete Annotations">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="#Top" rel="start" title="Top">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="dir.html#Top" rel="up" title="(dir)">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center"><small>GDB</small>&rsquo;s Obsolete Annotations</h1>
+
+
+
+
+
+
+<p>This file documents <small>GDB</small>&rsquo;s obsolete annotations.
+</p>
+<p>Copyright &copy; 1994-2017 Free Software Foundation, Inc.
+</p>
+<p>Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled &ldquo;GNU
+Free Documentation License&rdquo;.
+</p>
+
+
+<a name="Top"></a>
+<div class="header">
+<p>
+Next: <a href="#Annotations-Overview" accesskey="n" rel="next">Annotations Overview</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="GDB-Annotations"></a>
+<h1 class="top">GDB Annotations</h1>
+
+<p>This document describes the obsolete level two annotation interface
+implemented in older <small>GDB</small> versions.
+</p>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Annotations-Overview" accesskey="1">Annotations Overview</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">What annotations are; the general syntax.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Limitations" accesskey="2">Limitations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Limitations of the annotation interface.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Migrating-to-GDB_002fMI" accesskey="3">Migrating to GDB/MI</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Migrating to GDB/MI
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Server-Prefix" accesskey="4">Server Prefix</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Issuing a command without affecting user state.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Value-Annotations" accesskey="5">Value Annotations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Values are marked as such.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Frame-Annotations" accesskey="6">Frame Annotations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Stack frames are annotated.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Displays" accesskey="7">Displays</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top"><small>GDB</small> can be told to display something periodically.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Prompting" accesskey="8">Prompting</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Annotations marking <small>GDB</small>&rsquo;s need for input.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Errors" accesskey="9">Errors</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Annotations for error messages.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Breakpoint-Info">Breakpoint Info</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Information on breakpoints.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Invalidation">Invalidation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Some annotations describe things now invalid.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Annotations-for-Running">Annotations for Running</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+                        Whether the program is running, how it stopped, etc.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Source-Annotations">Source Annotations</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Annotations describing source code.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Multi_002dthreaded-Apps">Multi-threaded Apps</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">An annotation that reports multi-threadedness.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="#GNU-Free-Documentation-License">GNU Free Documentation License</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<a name="SEC_Contents"></a>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a name="toc-What-is-an-Annotation_003f" href="#Annotations-Overview">1 What is an Annotation?</a></li>
+  <li><a name="toc-Limitations-of-the-Annotation-Interface" href="#Limitations">2 Limitations of the Annotation Interface</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Dependant-on-CLI-output" href="#Dependant-on-CLI-output">2.1 Dependant on <small>CLI</small> output</a></li>
+    <li><a name="toc-Scalability" href="#Scalability">2.2 Scalability</a></li>
+    <li><a name="toc-Correctness" href="#Correctness">2.3 Correctness</a></li>
+    <li><a name="toc-Reliability" href="#Reliability">2.4 Reliability</a></li>
+    <li><a name="toc-Maintainability" href="#Maintainability">2.5 Maintainability</a></li>
+  </ul></li>
+  <li><a name="toc-Migrating-to-GDB_002fMI-1" href="#Migrating-to-GDB_002fMI">3 Migrating to <small>GDB/MI</small></a></li>
+  <li><a name="toc-The-Server-Prefix" href="#Server-Prefix">4 The Server Prefix</a></li>
+  <li><a name="toc-Values" href="#Value-Annotations">5 Values</a></li>
+  <li><a name="toc-Frames" href="#Frame-Annotations">6 Frames</a></li>
+  <li><a name="toc-Displays-1" href="#Displays">7 Displays</a></li>
+  <li><a name="toc-Annotation-for-GDB-Input" href="#Prompting">8 Annotation for <small>GDB</small> Input</a></li>
+  <li><a name="toc-Errors-1" href="#Errors">9 Errors</a></li>
+  <li><a name="toc-Information-on-Breakpoints" href="#Breakpoint-Info">10 Information on Breakpoints</a></li>
+  <li><a name="toc-Invalidation-Notices" href="#Invalidation">11 Invalidation Notices</a></li>
+  <li><a name="toc-Running-the-Program" href="#Annotations-for-Running">12 Running the Program</a></li>
+  <li><a name="toc-Displaying-Source" href="#Source-Annotations">13 Displaying Source</a></li>
+  <li><a name="toc-Multi_002dthreaded-Applications" href="#Multi_002dthreaded-Apps">14 Multi-threaded Applications</a></li>
+  <li><a name="toc-GNU-Free-Documentation-License-1" href="#GNU-Free-Documentation-License">Appendix A GNU Free Documentation License</a></li>
+</ul>
+</div>
+
+
+<hr>
+<a name="Annotations-Overview"></a>
+<div class="header">
+<p>
+Next: <a href="#Limitations" accesskey="n" rel="next">Limitations</a>, Previous: <a href="#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="What-is-an-Annotation_003f"></a>
+<h2 class="chapter">1 What is an Annotation?</h2>
+<a name="index-annotations"></a>
+
+<p>To produce obsolete level two annotations, start <small>GDB</small> with the
+<code>--annotate=2</code> option.
+</p>
+<p>Annotations start with a newline character, two &lsquo;<samp>control-z</samp>&rsquo;
+characters, and the name of the annotation.  If there is no additional
+information associated with this annotation, the name of the annotation
+is followed immediately by a newline.  If there is additional
+information, the name of the annotation is followed by a space, the
+additional information, and a newline.  The additional information
+cannot contain newline characters.
+</p>
+<p>Any output not beginning with a newline and two &lsquo;<samp>control-z</samp>&rsquo;
+characters denotes literal output from <small>GDB</small>.  Currently there is
+no need for <small>GDB</small> to output a newline followed by two
+&lsquo;<samp>control-z</samp>&rsquo; characters, but if there was such a need, the
+annotations could be extended with an &lsquo;<samp>escape</samp>&rsquo; annotation which
+means those three characters as output.
+</p>
+<p>A simple example of starting up <small>GDB</small> with annotations is:
+</p>
+<div class="smallexample">
+<pre class="smallexample">$ gdb --annotate=2
+GNU GDB 5.0
+Copyright 2000 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License,
+and you are welcome to change it and/or distribute copies of it
+under certain conditions.
+Type &quot;show copying&quot; to see the conditions.
+There is absolutely no warranty for GDB.  Type &quot;show warranty&quot;
+for details.
+This GDB was configured as &quot;sparc-sun-sunos4.1.3&quot;
+
+^Z^Zpre-prompt
+(gdb) 
+^Z^Zprompt
+quit
+
+^Z^Zpost-prompt
+$ 
+</pre></div>
+
+<p>Here &lsquo;<samp>quit</samp>&rsquo; is input to <small>GDB</small>; the rest is output from
+<small>GDB</small>.  The three lines beginning &lsquo;<samp>^Z^Z</samp>&rsquo; (where &lsquo;<samp>^Z</samp>&rsquo;
+denotes a &lsquo;<samp>control-z</samp>&rsquo; character) are annotations; the rest is
+output from <small>GDB</small>.
+</p>
+<hr>
+<a name="Limitations"></a>
+<div class="header">
+<p>
+Next: <a href="#Migrating-to-GDB_002fMI" accesskey="n" rel="next">Migrating to GDB/MI</a>, Previous: <a href="#Annotations-Overview" accesskey="p" rel="prev">Annotations Overview</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Limitations-of-the-Annotation-Interface"></a>
+<h2 class="chapter">2 Limitations of the Annotation Interface</h2>
+
+<p>The level two annotations mechanism is known to have a number of
+technical and architectural limitations.  As a consequence, in 2001,
+with the release of <small>GDB</small> 5.1 and the addition of <small>GDB/MI</small>,
+the annotation interface was marked as deprecated.
+</p>
+<p>This chapter discusses the known problems.
+</p>
+<a name="Dependant-on-CLI-output"></a>
+<h3 class="section">2.1 Dependant on <small>CLI</small> output</h3>
+
+<p>The annotation interface works by interspersing markups with
+<small>GDB</small> normal command-line interpreter output.  Unfortunately, this
+makes the annotation client dependant on not just the annotations, but
+also the <small>CLI</small> output.  This is because the client is forced to
+assume that specific <small>GDB</small> commands provide specific information.
+Any change to <small>GDB</small>&rsquo;s <small>CLI</small> output modifies or removes that
+information and, consequently, likely breaks the client.
+</p>
+<p>Since the <small>GDB/MI</small> output is independent of the <small>CLI</small>, it does not
+have this problem.
+</p>
+<a name="Scalability"></a>
+<h3 class="section">2.2 Scalability</h3>
+
+<p>The annotation interface relies on value annotations (see <a href="#Value-Annotations">Value Annotations</a>) and the display mechanism as a way of obtaining up-to-date
+value information.  These mechanisms are not scalable.
+</p>
+<p>In a graphical environment, where many values can be displayed
+simultaneously, a serious performance problem occurs when the client
+tries to first extract from <small>GDB</small>, and then re-display, all those
+values.  The client should instead only request and update the values
+that changed.
+</p>
+<p>The <small>GDB/MI</small> Variable Objects provide just that mechanism.
+</p>
+<a name="Correctness"></a>
+<h3 class="section">2.3 Correctness</h3>
+
+<p>The annotation interface assumes that a variable&rsquo;s value can only be
+changed when the target is running.  This assumption is not correct.  A
+single assignment to a single variable can result in the entire target,
+and all displayed values, needing an update.
+</p>
+<p>The <small>GDB/MI</small> Variable Objects include a mechanism for efficiently
+reporting such changes.
+</p>
+<a name="Reliability"></a>
+<h3 class="section">2.4 Reliability</h3>
+
+<p>The <small>GDB/MI</small> interface includes a dedicated test directory
+(<samp>gdb/gdb.mi</samp>), and any addition or fix to <small>GDB/MI</small> must include
+testsuite changes.
+</p>
+<a name="Maintainability"></a>
+<h3 class="section">2.5 Maintainability</h3>
+
+<p>The annotation mechanism was implemented by interspersing <small>CLI</small> print
+statements with various annotations.  As a consequence, any <small>CLI</small>
+output change can alter the annotation output.
+</p>
+<p>Since the <small>GDB/MI</small> output is independent of the <small>CLI</small>, and the
+<small>GDB/MI</small> is increasingly implemented independent of the <small>CLI</small>
+code, its long term maintenance is much easier.
+</p>
+<hr>
+<a name="Migrating-to-GDB_002fMI"></a>
+<div class="header">
+<p>
+Next: <a href="#Server-Prefix" accesskey="n" rel="next">Server Prefix</a>, Previous: <a href="#Limitations" accesskey="p" rel="prev">Limitations</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Migrating-to-GDB_002fMI-1"></a>
+<h2 class="chapter">3 Migrating to <small>GDB/MI</small></h2>
+
+<p>By using the &lsquo;<samp>interp mi</samp>&rsquo; command, it is possible for annotation
+clients to invoke <small>GDB/MI</small> commands, and hence access the
+<small>GDB/MI</small>.  By doing this, existing annotation clients have a
+migration path from this obsolete interface to <small>GDB/MI</small>.
+</p>
+<hr>
+<a name="Server-Prefix"></a>
+<div class="header">
+<p>
+Next: <a href="#Value-Annotations" accesskey="n" rel="next">Value Annotations</a>, Previous: <a href="#Migrating-to-GDB_002fMI" accesskey="p" rel="prev">Migrating to GDB/MI</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="The-Server-Prefix"></a>
+<h2 class="chapter">4 The Server Prefix</h2>
+<a name="index-server-prefix-for-annotations"></a>
+
+<p>To issue a command to <small>GDB</small> without affecting certain aspects of
+the state which is seen by users, prefix it with &lsquo;<samp>server </samp>&rsquo;.  This
+means that this command will not affect the command history, nor will it
+affect <small>GDB</small>&rsquo;s notion of which command to repeat if <tt class="key">RET</tt> is
+pressed on a line by itself.
+</p>
+<p>The server prefix does not affect the recording of values into the value
+history; to print a value without recording it into the value history,
+use the <code>output</code> command instead of the <code>print</code> command.
+</p>
+<hr>
+<a name="Value-Annotations"></a>
+<div class="header">
+<p>
+Next: <a href="#Frame-Annotations" accesskey="n" rel="next">Frame Annotations</a>, Previous: <a href="#Server-Prefix" accesskey="p" rel="prev">Server Prefix</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Values"></a>
+<h2 class="chapter">5 Values</h2>
+
+<p><em>Value Annotations have been removed.  <small>GDB/MI</small> instead provides
+Variable Objects.</em>
+</p>
+<a name="index-annotations-for-values"></a>
+<p>When a value is printed in various contexts, <small>GDB</small> uses
+annotations to delimit the value from the surrounding text.
+</p>
+<a name="index-value_002dhistory_002dbegin"></a>
+<a name="index-value_002dhistory_002dvalue"></a>
+<a name="index-value_002dhistory_002dend"></a>
+<p>If a value is printed using <code>print</code> and added to the value history,
+the annotation looks like
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zvalue-history-begin <var>history-number</var> <var>value-flags</var>
+<var>history-string</var>
+^Z^Zvalue-history-value
+<var>the-value</var>
+^Z^Zvalue-history-end
+</pre></div>
+
+<p>where <var>history-number</var> is the number it is getting in the value
+history, <var>history-string</var> is a string, such as &lsquo;<samp>$5 = </samp>&rsquo;, which
+introduces the value to the user, <var>the-value</var> is the output
+corresponding to the value itself, and <var>value-flags</var> is &lsquo;<samp>*</samp>&rsquo; for
+a value which can be dereferenced and &lsquo;<samp>-</samp>&rsquo; for a value which cannot.
+</p>
+<a name="index-value_002dbegin"></a>
+<a name="index-value_002dend"></a>
+<p>If the value is not added to the value history (it is an invalid float
+or it is printed with the <code>output</code> command), the annotation is similar:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zvalue-begin <var>value-flags</var>
+<var>the-value</var>
+^Z^Zvalue-end
+</pre></div>
+
+<a name="index-arg_002dbegin"></a>
+<a name="index-arg_002dname_002dend"></a>
+<a name="index-arg_002dvalue"></a>
+<a name="index-arg_002dend"></a>
+<p>When <small>GDB</small> prints an argument to a function (for example, in the output
+from the <code>backtrace</code> command), it annotates it as follows:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zarg-begin
+<var>argument-name</var>
+^Z^Zarg-name-end
+<var>separator-string</var>
+^Z^Zarg-value <var>value-flags</var>
+<var>the-value</var>
+^Z^Zarg-end
+</pre></div>
+
+<p>where <var>argument-name</var> is the name of the argument,
+<var>separator-string</var> is text which separates the name from the value
+for the user&rsquo;s benefit (such as &lsquo;<samp>=</samp>&rsquo;), and <var>value-flags</var> and
+<var>the-value</var> have the same meanings as in a
+<code>value-history-begin</code> annotation.
+</p>
+<a name="index-field_002dbegin"></a>
+<a name="index-field_002dname_002dend"></a>
+<a name="index-field_002dvalue"></a>
+<a name="index-field_002dend"></a>
+<p>When printing a structure, <small>GDB</small> annotates it as follows:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zfield-begin <var>value-flags</var>
+<var>field-name</var>
+^Z^Zfield-name-end
+<var>separator-string</var>
+^Z^Zfield-value
+<var>the-value</var>
+^Z^Zfield-end
+</pre></div>
+
+<p>where <var>field-name</var> is the name of the field, <var>separator-string</var>
+is text which separates the name from the value for the user&rsquo;s benefit
+(such as &lsquo;<samp>=</samp>&rsquo;), and <var>value-flags</var> and <var>the-value</var> have the
+same meanings as in a <code>value-history-begin</code> annotation.
+</p>
+<p>When printing an array, <small>GDB</small> annotates it as follows:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zarray-section-begin <var>array-index</var> <var>value-flags</var>
+</pre></div>
+
+<p>where <var>array-index</var> is the index of the first element being
+annotated and <var>value-flags</var> has the same meaning as in a
+<code>value-history-begin</code> annotation.  This is followed by any number
+of elements, where is element can be either a single element:
+</p>
+<a name="index-elt"></a>
+<div class="smallexample">
+<pre class="smallexample">&lsquo;<samp>,</samp>&rsquo; <var>whitespace</var>         ; <span class="roman">omitted for the first element</span>
+<var>the-value</var>
+^Z^Zelt
+</pre></div>
+
+<p>or a repeated element
+</p>
+<a name="index-elt_002drep"></a>
+<a name="index-elt_002drep_002dend"></a>
+<div class="smallexample">
+<pre class="smallexample">&lsquo;<samp>,</samp>&rsquo; <var>whitespace</var>         ; <span class="roman">omitted for the first element</span>
+<var>the-value</var>
+^Z^Zelt-rep <var>number-of-repetitions</var>
+<var>repetition-string</var>
+^Z^Zelt-rep-end
+</pre></div>
+
+<p>In both cases, <var>the-value</var> is the output for the value of the
+element and <var>whitespace</var> can contain spaces, tabs, and newlines.  In
+the repeated case, <var>number-of-repetitions</var> is the number of
+consecutive array elements which contain that value, and
+<var>repetition-string</var> is a string which is designed to convey to the
+user that repetition is being depicted.
+</p>
+<a name="index-array_002dsection_002dend"></a>
+<p>Once all the array elements have been output, the array annotation is
+ended with
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zarray-section-end
+</pre></div>
+
+<hr>
+<a name="Frame-Annotations"></a>
+<div class="header">
+<p>
+Next: <a href="#Displays" accesskey="n" rel="next">Displays</a>, Previous: <a href="#Value-Annotations" accesskey="p" rel="prev">Value Annotations</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Frames"></a>
+<h2 class="chapter">6 Frames</h2>
+
+<p><em>Value Annotations have been removed.  <small>GDB/MI</small> instead provides
+a number of frame commands.</em>
+</p>
+<p><em>Frame annotations are no longer available.  The <small>GDB/MI</small>
+provides &lsquo;<samp>-stack-list-arguments</samp>&rsquo;, &lsquo;<samp>-stack-list-locals</samp>&rsquo;, and
+&lsquo;<samp>-stack-list-frames</samp>&rsquo; commands.</em>
+</p>
+<a name="index-annotations-for-frames"></a>
+<p>Whenever <small>GDB</small> prints a frame, it annotates it.  For example, this applies
+to frames printed when <small>GDB</small> stops, output from commands such as
+<code>backtrace</code> or <code>up</code>, etc.
+</p>
+<a name="index-frame_002dbegin"></a>
+<p>The frame annotation begins with
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-begin <var>level</var> <var>address</var>
+<var>level-string</var>
+</pre></div>
+
+<p>where <var>level</var> is the number of the frame (0 is the innermost frame,
+and other frames have positive numbers), <var>address</var> is the address of
+the code executing in that frame, and <var>level-string</var> is a string
+designed to convey the level to the user.  <var>address</var> is in the form
+&lsquo;<samp>0x</samp>&rsquo; followed by one or more lowercase hex digits (note that this
+does not depend on the language).  The frame ends with
+</p>
+<a name="index-frame_002dend"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-end
+</pre></div>
+
+<p>Between these annotations is the main body of the frame, which can
+consist of
+</p>
+<ul>
+<li> <a name="index-function_002dcall"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zfunction-call
+<var>function-call-string</var>
+</pre></div>
+
+where <var>function-call-string</var> is text designed to convey to the user
+that this frame is associated with a function call made by <small>GDB</small> to a
+function in the program being debugged.
+
+</li><li> <a name="index-signal_002dhandler_002dcaller"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zsignal-handler-caller
+<var>signal-handler-caller-string</var>
+</pre></div>
+
+where <var>signal-handler-caller-string</var> is text designed to convey to
+the user that this frame is associated with whatever mechanism is used
+by this operating system to call a signal handler (it is the frame which
+calls the signal handler, not the frame for the signal handler itself).
+
+</li><li> A normal frame.
+
+<a name="index-frame_002daddress"></a>
+<a name="index-frame_002daddress_002dend"></a>
+<p>This can optionally (depending on whether this is thought of as
+interesting information for the user to see) begin with
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-address
+<var>address</var>
+^Z^Zframe-address-end
+<var>separator-string</var>
+</pre></div>
+
+<p>where <var>address</var> is the address executing in the frame (the same
+address as in the <code>frame-begin</code> annotation, but printed in a form
+which is intended for user consumption&mdash;in particular, the syntax varies
+depending on the language), and <var>separator-string</var> is a string
+intended to separate this address from what follows for the user&rsquo;s
+benefit.
+</p>
+<a name="index-frame_002dfunction_002dname"></a>
+<a name="index-frame_002dargs"></a>
+<p>Then comes
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-function-name
+<var>function-name</var>
+^Z^Zframe-args
+<var>arguments</var>
+</pre></div>
+
+<p>where <var>function-name</var> is the name of the function executing in the
+frame, or &lsquo;<samp>??</samp>&rsquo; if not known, and <var>arguments</var> are the arguments
+to the frame, with parentheses around them (each argument is annotated
+individually as well, see <a href="#Value-Annotations">Value Annotations</a>).
+</p>
+<a name="index-frame_002dsource_002dbegin"></a>
+<a name="index-frame_002dsource_002dfile"></a>
+<a name="index-frame_002dsource_002dfile_002dend"></a>
+<a name="index-frame_002dsource_002dline"></a>
+<a name="index-frame_002dsource_002dend"></a>
+<p>If source information is available, a reference to it is then printed:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-source-begin
+<var>source-intro-string</var>
+^Z^Zframe-source-file
+<var>filename</var>
+^Z^Zframe-source-file-end
+:
+^Z^Zframe-source-line
+<var>line-number</var>
+^Z^Zframe-source-end
+</pre></div>
+
+<p>where <var>source-intro-string</var> separates for the user&rsquo;s benefit the
+reference from the text which precedes it, <var>filename</var> is the name of
+the source file, and <var>line-number</var> is the line number within that
+file (the first line is line 1).
+</p>
+<a name="index-frame_002dwhere"></a>
+<p>If <small>GDB</small> prints some information about where the frame is from (which
+library, which load segment, etc.; currently only done on the RS/6000),
+it is annotated with
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zframe-where
+<var>information</var>
+</pre></div>
+
+<p>Then, if source is to actually be displayed for this frame (for example,
+this is not true for output from the <code>backtrace</code> command), then a
+<code>source</code> annotation (see <a href="#Source-Annotations">Source Annotations</a>) is displayed.  Unlike
+most annotations, this is output instead of the normal text which would be
+output, not in addition.
+</p></li></ul>
+
+<hr>
+<a name="Displays"></a>
+<div class="header">
+<p>
+Next: <a href="#Prompting" accesskey="n" rel="next">Prompting</a>, Previous: <a href="#Frame-Annotations" accesskey="p" rel="prev">Frame Annotations</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Displays-1"></a>
+<h2 class="chapter">7 Displays</h2>
+
+<p><em>Display Annotations have been removed.  <small>GDB/MI</small> instead
+provides Variable Objects.</em>
+</p>
+<a name="index-display_002dbegin"></a>
+<a name="index-display_002dnumber_002dend"></a>
+<a name="index-display_002dformat"></a>
+<a name="index-display_002dexpression"></a>
+<a name="index-display_002dexpression_002dend"></a>
+<a name="index-display_002dvalue"></a>
+<a name="index-display_002dend"></a>
+<a name="index-annotations-for-display"></a>
+<p>When <small>GDB</small> is told to display something using the <code>display</code> command,
+the results of the display are annotated:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zdisplay-begin
+<var>number</var>
+^Z^Zdisplay-number-end
+<var>number-separator</var>
+^Z^Zdisplay-format
+<var>format</var>
+^Z^Zdisplay-expression
+<var>expression</var>
+^Z^Zdisplay-expression-end
+<var>expression-separator</var>
+^Z^Zdisplay-value
+<var>value</var>
+^Z^Zdisplay-end
+</pre></div>
+
+<p>where <var>number</var> is the number of the display, <var>number-separator</var>
+is intended to separate the number from what follows for the user,
+<var>format</var> includes information such as the size, format, or other
+information about how the value is being displayed, <var>expression</var> is
+the expression being displayed, <var>expression-separator</var> is intended
+to separate the expression from the text that follows for the user,
+and <var>value</var> is the actual value being displayed.
+</p>
+<hr>
+<a name="Prompting"></a>
+<div class="header">
+<p>
+Next: <a href="#Errors" accesskey="n" rel="next">Errors</a>, Previous: <a href="#Displays" accesskey="p" rel="prev">Displays</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Annotation-for-GDB-Input"></a>
+<h2 class="chapter">8 Annotation for <small>GDB</small> Input</h2>
+
+<a name="index-annotations-for-prompts"></a>
+<p>When <small>GDB</small> prompts for input, it annotates this fact so it is possible
+to know when to send output, when the output from a given command is
+over, etc.
+</p>
+<p>Different kinds of input each have a different <em>input type</em>.  Each
+input type has three annotations: a <code>pre-</code> annotation, which
+denotes the beginning of any prompt which is being output, a plain
+annotation, which denotes the end of the prompt, and then a <code>post-</code>
+annotation which denotes the end of any echo which may (or may not) be
+associated with the input.  For example, the <code>prompt</code> input type
+features the following annotations:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zpre-prompt
+^Z^Zprompt
+^Z^Zpost-prompt
+</pre></div>
+
+<p>The input types are
+</p>
+<dl compact="compact">
+<dd><a name="index-pre_002dprompt"></a>
+<a name="index-prompt"></a>
+<a name="index-post_002dprompt"></a>
+</dd>
+<dt><code>prompt</code></dt>
+<dd><p>When <small>GDB</small> is prompting for a command (the main <small>GDB</small> prompt).
+</p>
+<a name="index-pre_002dcommands"></a>
+<a name="index-commands"></a>
+<a name="index-post_002dcommands"></a>
+</dd>
+<dt><code>commands</code></dt>
+<dd><p>When <small>GDB</small> prompts for a set of commands, like in the <code>commands</code>
+command.  The annotations are repeated for each command which is input.
+</p>
+<a name="index-pre_002doverload_002dchoice"></a>
+<a name="index-overload_002dchoice"></a>
+<a name="index-post_002doverload_002dchoice"></a>
+</dd>
+<dt><code>overload-choice</code></dt>
+<dd><p>When <small>GDB</small> wants the user to select between various overloaded functions.
+</p>
+<a name="index-pre_002dquery"></a>
+<a name="index-query"></a>
+<a name="index-post_002dquery"></a>
+</dd>
+<dt><code>query</code></dt>
+<dd><p>When <small>GDB</small> wants the user to confirm a potentially dangerous operation.
+</p>
+<a name="index-pre_002dprompt_002dfor_002dcontinue"></a>
+<a name="index-prompt_002dfor_002dcontinue"></a>
+<a name="index-post_002dprompt_002dfor_002dcontinue"></a>
+</dd>
+<dt><code>prompt-for-continue</code></dt>
+<dd><p>When <small>GDB</small> is asking the user to press return to continue.  Note: Don&rsquo;t
+expect this to work well; instead use <code>set height 0</code> to disable
+prompting.  This is because the counting of lines is buggy in the
+presence of annotations.
+</p></dd>
+</dl>
+
+<hr>
+<a name="Errors"></a>
+<div class="header">
+<p>
+Next: <a href="#Breakpoint-Info" accesskey="n" rel="next">Breakpoint Info</a>, Previous: <a href="#Prompting" accesskey="p" rel="prev">Prompting</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Errors-1"></a>
+<h2 class="chapter">9 Errors</h2>
+<a name="index-annotations-for-errors_002c-warnings-and-interrupts"></a>
+
+<a name="index-quit"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zquit
+</pre></div>
+
+<p>This annotation occurs right before <small>GDB</small> responds to an interrupt.
+</p>
+<a name="index-error"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zerror
+</pre></div>
+
+<p>This annotation occurs right before <small>GDB</small> responds to an error.
+</p>
+<p>Quit and error annotations indicate that any annotations which <small>GDB</small> was
+in the middle of may end abruptly.  For example, if a
+<code>value-history-begin</code> annotation is followed by a <code>error</code>, one
+cannot expect to receive the matching <code>value-history-end</code>.  One
+cannot expect not to receive it either, however; an error annotation
+does not necessarily mean that <small>GDB</small> is immediately returning all the way
+to the top level.
+</p>
+<a name="index-error_002dbegin"></a>
+<p>A quit or error annotation may be preceded by
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zerror-begin
+</pre></div>
+
+<p>Any output between that and the quit or error annotation is the error
+message.
+</p>
+<p>Warning messages are not yet annotated.
+</p>
+<hr>
+<a name="Breakpoint-Info"></a>
+<div class="header">
+<p>
+Next: <a href="#Invalidation" accesskey="n" rel="next">Invalidation</a>, Previous: <a href="#Errors" accesskey="p" rel="prev">Errors</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Information-on-Breakpoints"></a>
+<h2 class="chapter">10 Information on Breakpoints</h2>
+
+<p><em>Breakpoint Annotations have been removed.  <small>GDB/MI</small> instead
+provides breakpoint commands.</em>
+</p>
+<a name="index-annotations-for-breakpoints"></a>
+<p>The output from the <code>info breakpoints</code> command is annotated as follows:
+</p>
+<a name="index-breakpoints_002dheaders"></a>
+<a name="index-breakpoints_002dtable"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zbreakpoints-headers
+<var>header-entry</var>
+^Z^Zbreakpoints-table
+</pre></div>
+
+<p>where <var>header-entry</var> has the same syntax as an entry (see below) but
+instead of containing data, it contains strings which are intended to
+convey the meaning of each field to the user.  This is followed by any
+number of entries.  If a field does not apply for this entry, it is
+omitted.  Fields may contain trailing whitespace.  Each entry consists
+of:
+</p>
+<a name="index-record"></a>
+<a name="index-field"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zrecord
+^Z^Zfield 0
+<var>number</var>
+^Z^Zfield 1
+<var>type</var>
+^Z^Zfield 2
+<var>disposition</var>
+^Z^Zfield 3
+<var>enable</var>
+^Z^Zfield 4
+<var>address</var>
+^Z^Zfield 5
+<var>what</var>
+^Z^Zfield 6
+<var>frame</var>
+^Z^Zfield 7
+<var>condition</var>
+^Z^Zfield 8
+<var>ignore-count</var>
+^Z^Zfield 9
+<var>commands</var>
+</pre></div>
+
+<p>Note that <var>address</var> is intended for user consumption&mdash;the syntax
+varies depending on the language.
+</p>
+<p>The output ends with
+</p>
+<a name="index-breakpoints_002dtable_002dend"></a>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zbreakpoints-table-end
+</pre></div>
+
+<hr>
+<a name="Invalidation"></a>
+<div class="header">
+<p>
+Next: <a href="#Annotations-for-Running" accesskey="n" rel="next">Annotations for Running</a>, Previous: <a href="#Breakpoint-Info" accesskey="p" rel="prev">Breakpoint Info</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Invalidation-Notices"></a>
+<h2 class="chapter">11 Invalidation Notices</h2>
+
+<a name="index-annotations-for-invalidation-messages"></a>
+<p>The following annotations say that certain pieces of state may have
+changed.
+</p>
+<dl compact="compact">
+<dd><a name="index-frames_002dinvalid"></a>
+</dd>
+<dt><code>^Z^Zframes-invalid</code></dt>
+<dd>
+<p>The frames (for example, output from the <code>backtrace</code> command) may
+have changed.
+</p>
+<a name="index-breakpoints_002dinvalid"></a>
+</dd>
+<dt><code>^Z^Zbreakpoints-invalid</code></dt>
+<dd>
+<p>The breakpoints may have changed.  For example, the user just added or
+deleted a breakpoint.
+</p></dd>
+</dl>
+
+<hr>
+<a name="Annotations-for-Running"></a>
+<div class="header">
+<p>
+Next: <a href="#Source-Annotations" accesskey="n" rel="next">Source Annotations</a>, Previous: <a href="#Invalidation" accesskey="p" rel="prev">Invalidation</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Running-the-Program"></a>
+<h2 class="chapter">12 Running the Program</h2>
+<a name="index-annotations-for-running-programs"></a>
+
+<a name="index-starting"></a>
+<a name="index-stopping"></a>
+<p>When the program starts executing due to a <small>GDB</small> command such as
+<code>step</code> or <code>continue</code>, 
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zstarting
+</pre></div>
+
+<p>is output.  When the program stops, 
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zstopped
+</pre></div>
+
+<p>is output.  Before the <code>stopped</code> annotation, a variety of
+annotations describe how the program stopped.
+</p>
+<dl compact="compact">
+<dd><a name="index-exited"></a>
+</dd>
+<dt><code>^Z^Zexited <var>exit-status</var></code></dt>
+<dd><p>The program exited, and <var>exit-status</var> is the exit status (zero for
+successful exit, otherwise nonzero).
+</p>
+<a name="index-signalled"></a>
+<a name="index-signal_002dname"></a>
+<a name="index-signal_002dname_002dend"></a>
+<a name="index-signal_002dstring"></a>
+<a name="index-signal_002dstring_002dend"></a>
+</dd>
+<dt><code>^Z^Zsignalled</code></dt>
+<dd><p>The program exited with a signal.  After the <code>^Z^Zsignalled</code>, the
+annotation continues:
+</p>
+<div class="smallexample">
+<pre class="smallexample"><var>intro-text</var>
+^Z^Zsignal-name
+<var>name</var>
+^Z^Zsignal-name-end
+<var>middle-text</var>
+^Z^Zsignal-string
+<var>string</var>
+^Z^Zsignal-string-end
+<var>end-text</var>
+</pre></div>
+
+<p>where <var>name</var> is the name of the signal, such as <code>SIGILL</code> or
+<code>SIGSEGV</code>, and <var>string</var> is the explanation of the signal, such
+as <code>Illegal Instruction</code> or <code>Segmentation fault</code>.
+<var>intro-text</var>, <var>middle-text</var>, and <var>end-text</var> are for the
+user&rsquo;s benefit and have no particular format.
+</p>
+<a name="index-signal"></a>
+</dd>
+<dt><code>^Z^Zsignal</code></dt>
+<dd><p>The syntax of this annotation is just like <code>signalled</code>, but <small>GDB</small> is
+just saying that the program received the signal, not that it was
+terminated with it.
+</p>
+<a name="index-breakpoint"></a>
+</dd>
+<dt><code>^Z^Zbreakpoint <var>number</var></code></dt>
+<dd><p>The program hit breakpoint number <var>number</var>.
+</p>
+<a name="index-watchpoint"></a>
+</dd>
+<dt><code>^Z^Zwatchpoint <var>number</var></code></dt>
+<dd><p>The program hit watchpoint number <var>number</var>.
+</p></dd>
+</dl>
+
+<hr>
+<a name="Source-Annotations"></a>
+<div class="header">
+<p>
+Next: <a href="#Multi_002dthreaded-Apps" accesskey="n" rel="next">Multi-threaded Apps</a>, Previous: <a href="#Annotations-for-Running" accesskey="p" rel="prev">Annotations for Running</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Displaying-Source"></a>
+<h2 class="chapter">13 Displaying Source</h2>
+<a name="index-annotations-for-source-display"></a>
+
+<a name="index-source"></a>
+<p>The following annotation is used instead of displaying source code:
+</p>
+<div class="smallexample">
+<pre class="smallexample">^Z^Zsource <var>filename</var>:<var>line</var>:<var>character</var>:<var>middle</var>:<var>addr</var>
+</pre></div>
+
+<p>where <var>filename</var> is an absolute file name indicating which source
+file, <var>line</var> is the line number within that file (where 1 is the
+first line in the file), <var>character</var> is the character position
+within the file (where 0 is the first character in the file) (for most
+debug formats this will necessarily point to the beginning of a line),
+<var>middle</var> is &lsquo;<samp>middle</samp>&rsquo; if <var>addr</var> is in the middle of the
+line, or &lsquo;<samp>beg</samp>&rsquo; if <var>addr</var> is at the beginning of the line, and
+<var>addr</var> is the address in the target program associated with the
+source which is being displayed.  <var>addr</var> is in the form &lsquo;<samp>0x</samp>&rsquo;
+followed by one or more lowercase hex digits (note that this does not
+depend on the language).
+</p>
+<hr>
+<a name="Multi_002dthreaded-Apps"></a>
+<div class="header">
+<p>
+Next: <a href="#GNU-Free-Documentation-License" accesskey="n" rel="next">GNU Free Documentation License</a>, Previous: <a href="#Source-Annotations" accesskey="p" rel="prev">Source Annotations</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="Multi_002dthreaded-Applications"></a>
+<h2 class="chapter">14 Multi-threaded Applications</h2>
+<a name="index-annotations-for-multi_002dthreaded-apps"></a>
+
+<p>The following annotations report thread related changes of state.
+</p>
+<dl compact="compact">
+<dd><a name="index-new_002dthread_002c-annotation"></a>
+</dd>
+<dt><code>^Z^Znew-thread</code></dt>
+<dd>
+<p>This annotation is issued once for each thread that is created apart from
+the main thread, which is not reported.
+</p>
+<a name="index-thread_002dchanged_002c-annotation"></a>
+</dd>
+<dt><code>^Z^Zthread-changed</code></dt>
+<dd>
+<p>The selected thread has changed.  This may occur at the request of the
+user with the <code>thread</code> command, or as a result of execution,
+e.g., another thread hits a breakpoint.
+</p>
+</dd>
+</dl>
+
+<hr>
+<a name="GNU-Free-Documentation-License"></a>
+<div class="header">
+<p>
+Previous: <a href="#Multi_002dthreaded-Apps" accesskey="p" rel="prev">Multi-threaded Apps</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<a name="GNU-Free-Documentation-License-1"></a>
+<h2 class="appendix">Appendix A GNU Free Documentation License</h2>
+<div align="center">Version 1.3, 3 November 2008
+</div>
+
+<div class="display">
+<pre class="display">Copyright &copy; 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+<a href="http://fsf.org/">http://fsf.org/</a>
+
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+</pre></div>
+
+<ol start="0">
+<li> PREAMBLE
+
+<p>The purpose of this License is to make a manual, textbook, or other
+functional and useful document <em>free</em> in the sense of freedom: to
+assure everyone the effective freedom to copy and redistribute it,
+with or without modifying it, either commercially or noncommercially.
+Secondarily, this License preserves for the author and publisher a way
+to get credit for their work, while not being considered responsible
+for modifications made by others.
+</p>
+<p>This License is a kind of &ldquo;copyleft&rdquo;, which means that derivative
+works of the document must themselves be free in the same sense.  It
+complements the GNU General Public License, which is a copyleft
+license designed for free software.
+</p>
+<p>We have designed this License in order to use it for manuals for free
+software, because free software needs free documentation: a free
+program should come with manuals providing the same freedoms that the
+software does.  But this License is not limited to software manuals;
+it can be used for any textual work, regardless of subject matter or
+whether it is published as a printed book.  We recommend this License
+principally for works whose purpose is instruction or reference.
+</p>
+</li><li> APPLICABILITY AND DEFINITIONS
+
+<p>This License applies to any manual or other work, in any medium, that
+contains a notice placed by the copyright holder saying it can be
+distributed under the terms of this License.  Such a notice grants a
+world-wide, royalty-free license, unlimited in duration, to use that
+work under the conditions stated herein.  The &ldquo;Document&rdquo;, below,
+refers to any such manual or work.  Any member of the public is a
+licensee, and is addressed as &ldquo;you&rdquo;.  You accept the license if you
+copy, modify or distribute the work in a way requiring permission
+under copyright law.
+</p>
+<p>A &ldquo;Modified Version&rdquo; of the Document means any work containing the
+Document or a portion of it, either copied verbatim, or with
+modifications and/or translated into another language.
+</p>
+<p>A &ldquo;Secondary Section&rdquo; is a named appendix or a front-matter section
+of the Document that deals exclusively with the relationship of the
+publishers or authors of the Document to the Document&rsquo;s overall
+subject (or to related matters) and contains nothing that could fall
+directly within that overall subject.  (Thus, if the Document is in
+part a textbook of mathematics, a Secondary Section may not explain
+any mathematics.)  The relationship could be a matter of historical
+connection with the subject or with related matters, or of legal,
+commercial, philosophical, ethical or political position regarding
+them.
+</p>
+<p>The &ldquo;Invariant Sections&rdquo; are certain Secondary Sections whose titles
+are designated, as being those of Invariant Sections, in the notice
+that says that the Document is released under this License.  If a
+section does not fit the above definition of Secondary then it is not
+allowed to be designated as Invariant.  The Document may contain zero
+Invariant Sections.  If the Document does not identify any Invariant
+Sections then there are none.
+</p>
+<p>The &ldquo;Cover Texts&rdquo; are certain short passages of text that are listed,
+as Front-Cover Texts or Back-Cover Texts, in the notice that says that
+the Document is released under this License.  A Front-Cover Text may
+be at most 5 words, and a Back-Cover Text may be at most 25 words.
+</p>
+<p>A &ldquo;Transparent&rdquo; copy of the Document means a machine-readable copy,
+represented in a format whose specification is available to the
+general public, that is suitable for revising the document
+straightforwardly with generic text editors or (for images composed of
+pixels) generic paint programs or (for drawings) some widely available
+drawing editor, and that is suitable for input to text formatters or
+for automatic translation to a variety of formats suitable for input
+to text formatters.  A copy made in an otherwise Transparent file
+format whose markup, or absence of markup, has been arranged to thwart
+or discourage subsequent modification by readers is not Transparent.
+An image format is not Transparent if used for any substantial amount
+of text.  A copy that is not &ldquo;Transparent&rdquo; is called &ldquo;Opaque&rdquo;.
+</p>
+<p>Examples of suitable formats for Transparent copies include plain
+<small>ASCII</small> without markup, Texinfo input format, LaTeX input
+format, <acronym>SGML</acronym> or <acronym>XML</acronym> using a publicly available
+<acronym>DTD</acronym>, and standard-conforming simple <acronym>HTML</acronym>,
+PostScript or <acronym>PDF</acronym> designed for human modification.  Examples
+of transparent image formats include <acronym>PNG</acronym>, <acronym>XCF</acronym> and
+<acronym>JPG</acronym>.  Opaque formats include proprietary formats that can be
+read and edited only by proprietary word processors, <acronym>SGML</acronym> or
+<acronym>XML</acronym> for which the <acronym>DTD</acronym> and/or processing tools are
+not generally available, and the machine-generated <acronym>HTML</acronym>,
+PostScript or <acronym>PDF</acronym> produced by some word processors for
+output purposes only.
+</p>
+<p>The &ldquo;Title Page&rdquo; means, for a printed book, the title page itself,
+plus such following pages as are needed to hold, legibly, the material
+this License requires to appear in the title page.  For works in
+formats which do not have any title page as such, &ldquo;Title Page&rdquo; means
+the text near the most prominent appearance of the work&rsquo;s title,
+preceding the beginning of the body of the text.
+</p>
+<p>The &ldquo;publisher&rdquo; means any person or entity that distributes copies
+of the Document to the public.
+</p>
+<p>A section &ldquo;Entitled XYZ&rdquo; means a named subunit of the Document whose
+title either is precisely XYZ or contains XYZ in parentheses following
+text that translates XYZ in another language.  (Here XYZ stands for a
+specific section name mentioned below, such as &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, &ldquo;Endorsements&rdquo;, or &ldquo;History&rdquo;.)  To &ldquo;Preserve the Title&rdquo;
+of such a section when you modify the Document means that it remains a
+section &ldquo;Entitled XYZ&rdquo; according to this definition.
+</p>
+<p>The Document may include Warranty Disclaimers next to the notice which
+states that this License applies to the Document.  These Warranty
+Disclaimers are considered to be included by reference in this
+License, but only as regards disclaiming warranties: any other
+implication that these Warranty Disclaimers may have is void and has
+no effect on the meaning of this License.
+</p>
+</li><li> VERBATIM COPYING
+
+<p>You may copy and distribute the Document in any medium, either
+commercially or noncommercially, provided that this License, the
+copyright notices, and the license notice saying this License applies
+to the Document are reproduced in all copies, and that you add no other
+conditions whatsoever to those of this License.  You may not use
+technical measures to obstruct or control the reading or further
+copying of the copies you make or distribute.  However, you may accept
+compensation in exchange for copies.  If you distribute a large enough
+number of copies you must also follow the conditions in section 3.
+</p>
+<p>You may also lend copies, under the same conditions stated above, and
+you may publicly display copies.
+</p>
+</li><li> COPYING IN QUANTITY
+
+<p>If you publish printed copies (or copies in media that commonly have
+printed covers) of the Document, numbering more than 100, and the
+Document&rsquo;s license notice requires Cover Texts, you must enclose the
+copies in covers that carry, clearly and legibly, all these Cover
+Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
+the back cover.  Both covers must also clearly and legibly identify
+you as the publisher of these copies.  The front cover must present
+the full title with all words of the title equally prominent and
+visible.  You may add other material on the covers in addition.
+Copying with changes limited to the covers, as long as they preserve
+the title of the Document and satisfy these conditions, can be treated
+as verbatim copying in other respects.
+</p>
+<p>If the required texts for either cover are too voluminous to fit
+legibly, you should put the first ones listed (as many as fit
+reasonably) on the actual cover, and continue the rest onto adjacent
+pages.
+</p>
+<p>If you publish or distribute Opaque copies of the Document numbering
+more than 100, you must either include a machine-readable Transparent
+copy along with each Opaque copy, or state in or with each Opaque copy
+a computer-network location from which the general network-using
+public has access to download using public-standard network protocols
+a complete Transparent copy of the Document, free of added material.
+If you use the latter option, you must take reasonably prudent steps,
+when you begin distribution of Opaque copies in quantity, to ensure
+that this Transparent copy will remain thus accessible at the stated
+location until at least one year after the last time you distribute an
+Opaque copy (directly or through your agents or retailers) of that
+edition to the public.
+</p>
+<p>It is requested, but not required, that you contact the authors of the
+Document well before redistributing any large number of copies, to give
+them a chance to provide you with an updated version of the Document.
+</p>
+</li><li> MODIFICATIONS
+
+<p>You may copy and distribute a Modified Version of the Document under
+the conditions of sections 2 and 3 above, provided that you release
+the Modified Version under precisely this License, with the Modified
+Version filling the role of the Document, thus licensing distribution
+and modification of the Modified Version to whoever possesses a copy
+of it.  In addition, you must do these things in the Modified Version:
+</p>
+<ol type="A" start="1">
+<li> Use in the Title Page (and on the covers, if any) a title distinct
+from that of the Document, and from those of previous versions
+(which should, if there were any, be listed in the History section
+of the Document).  You may use the same title as a previous version
+if the original publisher of that version gives permission.
+
+</li><li> List on the Title Page, as authors, one or more persons or entities
+responsible for authorship of the modifications in the Modified
+Version, together with at least five of the principal authors of the
+Document (all of its principal authors, if it has fewer than five),
+unless they release you from this requirement.
+
+</li><li> State on the Title page the name of the publisher of the
+Modified Version, as the publisher.
+
+</li><li> Preserve all the copyright notices of the Document.
+
+</li><li> Add an appropriate copyright notice for your modifications
+adjacent to the other copyright notices.
+
+</li><li> Include, immediately after the copyright notices, a license notice
+giving the public permission to use the Modified Version under the
+terms of this License, in the form shown in the Addendum below.
+
+</li><li> Preserve in that license notice the full lists of Invariant Sections
+and required Cover Texts given in the Document&rsquo;s license notice.
+
+</li><li> Include an unaltered copy of this License.
+
+</li><li> Preserve the section Entitled &ldquo;History&rdquo;, Preserve its Title, and add
+to it an item stating at least the title, year, new authors, and
+publisher of the Modified Version as given on the Title Page.  If
+there is no section Entitled &ldquo;History&rdquo; in the Document, create one
+stating the title, year, authors, and publisher of the Document as
+given on its Title Page, then add an item describing the Modified
+Version as stated in the previous sentence.
+
+</li><li> Preserve the network location, if any, given in the Document for
+public access to a Transparent copy of the Document, and likewise
+the network locations given in the Document for previous versions
+it was based on.  These may be placed in the &ldquo;History&rdquo; section.
+You may omit a network location for a work that was published at
+least four years before the Document itself, or if the original
+publisher of the version it refers to gives permission.
+
+</li><li> For any section Entitled &ldquo;Acknowledgements&rdquo; or &ldquo;Dedications&rdquo;, Preserve
+the Title of the section, and preserve in the section all the
+substance and tone of each of the contributor acknowledgements and/or
+dedications given therein.
+
+</li><li> Preserve all the Invariant Sections of the Document,
+unaltered in their text and in their titles.  Section numbers
+or the equivalent are not considered part of the section titles.
+
+</li><li> Delete any section Entitled &ldquo;Endorsements&rdquo;.  Such a section
+may not be included in the Modified Version.
+
+</li><li> Do not retitle any existing section to be Entitled &ldquo;Endorsements&rdquo; or
+to conflict in title with any Invariant Section.
+
+</li><li> Preserve any Warranty Disclaimers.
+</li></ol>
+
+<p>If the Modified Version includes new front-matter sections or
+appendices that qualify as Secondary Sections and contain no material
+copied from the Document, you may at your option designate some or all
+of these sections as invariant.  To do this, add their titles to the
+list of Invariant Sections in the Modified Version&rsquo;s license notice.
+These titles must be distinct from any other section titles.
+</p>
+<p>You may add a section Entitled &ldquo;Endorsements&rdquo;, provided it contains
+nothing but endorsements of your Modified Version by various
+parties&mdash;for example, statements of peer review or that the text has
+been approved by an organization as the authoritative definition of a
+standard.
+</p>
+<p>You may add a passage of up to five words as a Front-Cover Text, and a
+passage of up to 25 words as a Back-Cover Text, to the end of the list
+of Cover Texts in the Modified Version.  Only one passage of
+Front-Cover Text and one of Back-Cover Text may be added by (or
+through arrangements made by) any one entity.  If the Document already
+includes a cover text for the same cover, previously added by you or
+by arrangement made by the same entity you are acting on behalf of,
+you may not add another; but you may replace the old one, on explicit
+permission from the previous publisher that added the old one.
+</p>
+<p>The author(s) and publisher(s) of the Document do not by this License
+give permission to use their names for publicity for or to assert or
+imply endorsement of any Modified Version.
+</p>
+</li><li> COMBINING DOCUMENTS
+
+<p>You may combine the Document with other documents released under this
+License, under the terms defined in section 4 above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its
+license notice, and that you preserve all their Warranty Disclaimers.
+</p>
+<p>The combined work need only contain one copy of this License, and
+multiple identical Invariant Sections may be replaced with a single
+copy.  If there are multiple Invariant Sections with the same name but
+different contents, make the title of each such section unique by
+adding at the end of it, in parentheses, the name of the original
+author or publisher of that section if known, or else a unique number.
+Make the same adjustment to the section titles in the list of
+Invariant Sections in the license notice of the combined work.
+</p>
+<p>In the combination, you must combine any sections Entitled &ldquo;History&rdquo;
+in the various original documents, forming one section Entitled
+&ldquo;History&rdquo;; likewise combine any sections Entitled &ldquo;Acknowledgements&rdquo;,
+and any sections Entitled &ldquo;Dedications&rdquo;.  You must delete all
+sections Entitled &ldquo;Endorsements.&rdquo;
+</p>
+</li><li> COLLECTIONS OF DOCUMENTS
+
+<p>You may make a collection consisting of the Document and other documents
+released under this License, and replace the individual copies of this
+License in the various documents with a single copy that is included in
+the collection, provided that you follow the rules of this License for
+verbatim copying of each of the documents in all other respects.
+</p>
+<p>You may extract a single document from such a collection, and distribute
+it individually under this License, provided you insert a copy of this
+License into the extracted document, and follow this License in all
+other respects regarding verbatim copying of that document.
+</p>
+</li><li> AGGREGATION WITH INDEPENDENT WORKS
+
+<p>A compilation of the Document or its derivatives with other separate
+and independent documents or works, in or on a volume of a storage or
+distribution medium, is called an &ldquo;aggregate&rdquo; if the copyright
+resulting from the compilation is not used to limit the legal rights
+of the compilation&rsquo;s users beyond what the individual works permit.
+When the Document is included in an aggregate, this License does not
+apply to the other works in the aggregate which are not themselves
+derivative works of the Document.
+</p>
+<p>If the Cover Text requirement of section 3 is applicable to these
+copies of the Document, then if the Document is less than one half of
+the entire aggregate, the Document&rsquo;s Cover Texts may be placed on
+covers that bracket the Document within the aggregate, or the
+electronic equivalent of covers if the Document is in electronic form.
+Otherwise they must appear on printed covers that bracket the whole
+aggregate.
+</p>
+</li><li> TRANSLATION
+
+<p>Translation is considered a kind of modification, so you may
+distribute translations of the Document under the terms of section 4.
+Replacing Invariant Sections with translations requires special
+permission from their copyright holders, but you may include
+translations of some or all Invariant Sections in addition to the
+original versions of these Invariant Sections.  You may include a
+translation of this License, and all the license notices in the
+Document, and any Warranty Disclaimers, provided that you also include
+the original English version of this License and the original versions
+of those notices and disclaimers.  In case of a disagreement between
+the translation and the original version of this License or a notice
+or disclaimer, the original version will prevail.
+</p>
+<p>If a section in the Document is Entitled &ldquo;Acknowledgements&rdquo;,
+&ldquo;Dedications&rdquo;, or &ldquo;History&rdquo;, the requirement (section 4) to Preserve
+its Title (section 1) will typically require changing the actual
+title.
+</p>
+</li><li> TERMINATION
+
+<p>You may not copy, modify, sublicense, or distribute the Document
+except as expressly provided under this License.  Any attempt
+otherwise to copy, modify, sublicense, or distribute it is void, and
+will automatically terminate your rights under this License.
+</p>
+<p>However, if you cease all violation of this License, then your license
+from a particular copyright holder is reinstated (a) provisionally,
+unless and until the copyright holder explicitly and finally
+terminates your license, and (b) permanently, if the copyright holder
+fails to notify you of the violation by some reasonable means prior to
+60 days after the cessation.
+</p>
+<p>Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.
+</p>
+<p>Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, receipt of a copy of some or all of the same material does
+not give you any rights to use it.
+</p>
+</li><li> FUTURE REVISIONS OF THIS LICENSE
+
+<p>The Free Software Foundation may publish new, revised versions
+of the GNU Free Documentation License from time to time.  Such new
+versions will be similar in spirit to the present version, but may
+differ in detail to address new problems or concerns.  See
+<a href="http://www.gnu.org/copyleft/">http://www.gnu.org/copyleft/</a>.
+</p>
+<p>Each version of the License is given a distinguishing version number.
+If the Document specifies that a particular numbered version of this
+License &ldquo;or any later version&rdquo; applies to it, you have the option of
+following the terms and conditions either of that specified version or
+of any later version that has been published (not as a draft) by the
+Free Software Foundation.  If the Document does not specify a version
+number of this License, you may choose any version ever published (not
+as a draft) by the Free Software Foundation.  If the Document
+specifies that a proxy can decide which future versions of this
+License can be used, that proxy&rsquo;s public statement of acceptance of a
+version permanently authorizes you to choose that version for the
+Document.
+</p>
+</li><li> RELICENSING
+
+<p>&ldquo;Massive Multiauthor Collaboration Site&rdquo; (or &ldquo;MMC Site&rdquo;) means any
+World Wide Web server that publishes copyrightable works and also
+provides prominent facilities for anybody to edit those works.  A
+public wiki that anybody can edit is an example of such a server.  A
+&ldquo;Massive Multiauthor Collaboration&rdquo; (or &ldquo;MMC&rdquo;) contained in the
+site means any set of copyrightable works thus published on the MMC
+site.
+</p>
+<p>&ldquo;CC-BY-SA&rdquo; means the Creative Commons Attribution-Share Alike 3.0
+license published by Creative Commons Corporation, a not-for-profit
+corporation with a principal place of business in San Francisco,
+California, as well as future copyleft versions of that license
+published by that same organization.
+</p>
+<p>&ldquo;Incorporate&rdquo; means to publish or republish a Document, in whole or
+in part, as part of another Document.
+</p>
+<p>An MMC is &ldquo;eligible for relicensing&rdquo; if it is licensed under this
+License, and if all works that were first published under this License
+somewhere other than this MMC, and subsequently incorporated in whole
+or in part into the MMC, (1) had no cover texts or invariant sections,
+and (2) were thus incorporated prior to November 1, 2008.
+</p>
+<p>The operator of an MMC Site may republish an MMC contained in the site
+under CC-BY-SA on the same site at any time before August 1, 2009,
+provided the MMC is eligible for relicensing.
+</p>
+</li></ol>
+
+<a name="ADDENDUM_003a-How-to-use-this-License-for-your-documents"></a>
+<h3 class="heading">ADDENDUM: How to use this License for your documents</h3>
+
+<p>To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and
+license notices just after the title page:
+</p>
+<div class="smallexample">
+<pre class="smallexample">  Copyright (C)  <var>year</var>  <var>your name</var>.
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.3
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+  Texts.  A copy of the license is included in the section entitled ``GNU
+  Free Documentation License''.
+</pre></div>
+
+<p>If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the &ldquo;with&hellip;Texts.&rdquo; line with this:
+</p>
+<div class="smallexample">
+<pre class="smallexample">    with the Invariant Sections being <var>list their titles</var>, with
+    the Front-Cover Texts being <var>list</var>, and with the Back-Cover Texts
+    being <var>list</var>.
+</pre></div>
+
+<p>If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+</p>
+<p>If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License,
+to permit their use in free software.
+</p>
+
+
+<hr>
+
+
+
+</body>
+</html>

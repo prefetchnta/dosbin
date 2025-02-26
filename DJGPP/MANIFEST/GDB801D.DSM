@@ -1,0 +1,48 @@
+#
+# DSM for GNU debugger (GDB) 8.0.1 documentation.
+# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2018-05-23
+# Product compiled using gcc810b, bnu230br2 and djdev206.
+#
+
+dsm-file-version: 1.0
+dsm-name: gdb801d
+dsm-version: 0.6.1
+
+type: documentation
+
+dsm-author: Juan Manuel Guerrero
+dsm-author-email: juan.guerrero@gmx.de
+
+name: gdb
+version: 8.0.1 release 1
+manifest: gdb801d
+libraries-dsm: gdb801a
+binaries-dsm: gdb801b
+sources-dsm: gdb801s
+short-description: Documentation for GNU debugger (GDB) version 8.0.1
+long-description: GDB is a source-level debugger for DJGPP programs.
+
+license: GNU GPL
+# author.
+author: Richard Stallman
+author-email: 
+# maintainer of the DJGPP port.
+maintainer: Juan Manuel Guerrero
+maintainer-email: juan.guerrero@gmx.de
+# For reporting bugs.
+mailing-list: gdb-patches@sourceware.org
+# The home page of GNU debugger (GDB).
+web-site: http://www.gnu.org/software/gdb/
+# The ftp site of GNU debugger (GDB).
+ftp-site: ftp://ftp.gnu.org/software/gdb/
+# For discussing DJGPP- and DOS/Windows-specific aspects.
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Juan Manuel Guerrero
+porter-email: juan.guerrero@gmx.de
+
+simtelnet-path: v2gnu/
+zip: gdb801d.zip
+
+replaces: gdb < 8.0.1 release 1
